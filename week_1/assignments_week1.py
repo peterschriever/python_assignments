@@ -133,3 +133,87 @@ print("Assignment 5")
 s = "Guido van Rossum"
 L = s.split(' ')
 print(L)
+
+print("\n")
+
+# Assignment 6
+print("Assignment 6 A - C")
+
+print("Start a")
+# note to self: don't do this.
+# Use descriptive variable names!
+# Code should be easy to read!
+L = [1, 2, 3, 4, 5, 6]
+for i in range(1, 6):
+    L[i] = L[i - 1]
+    print(L)
+print("End a")
+
+print("Start b")
+L1 = list(range(1, 10, 2))
+L2 = L1
+L1[0] = 111 # remember: because L2 = L1, if we change L1 the same happens to L2
+print(L1)
+print(L2)
+print("End b")
+
+print("Start c")
+a, b = 0, 1 # pls don't do this a = 0, b = 1
+while b < 10:
+    print (b)
+    # a = b, b = a+b !== b = b+b
+    # Because a = b happens at the same time as b = a+b.
+    # So eg: a = 0, b = 1
+    # a(0) = 1(b), b(1) = 0(a)+1(b) => a(1) = 1(b), b(1) = 1(a)+1(b)
+    # This explains the double 1 and skips in numbers.
+    # But honestly, I feel like this is some pretty bad code..
+    a, b = b, a+b
+print("End c")
+
+print("\n")
+
+# Assignment 7
+print("Assignment 7 A Tuple vs List")
+
+aTuple = 123, 555, "Foo Bar!", 'a'
+aList = [123, 555, "Foo Bar!", 'a']
+print(aTuple)
+print(aList)
+
+# Both may be nested
+anotherTuple = 111, 222, aTuple
+print(anotherTuple)
+anotherList = [111, 222, aList]
+print(anotherList)
+
+# Tuples are immutable / their values can not be changed
+#aTuple[0] = "This will throw an error."
+
+print("\n")
+
+print("Assignment 7 B")
+aTuple = 123, 321, "bar"
+aList = [222, 'm', "zzz"]
+tupleToList = list(aTuple)
+listToTuple = tuple(aList)
+print("aTuple converted to a List: " + str(tupleToList))
+print("aList converted to a Tuple: " + str(listToTuple))
+
+print("\n")
+
+print("Assignment 7 C - E")
+# c
+t = (1, 2, 3)
+#t.append(4) # no attribute 'apend'
+#t.remove(0) # no attribute 'remove'
+#t[0] = 1 # tuple is immutable
+
+# d
+y = 9
+x = y**0,5 # The comma is actually making a tuple here
+#z = 10 - x # TypeError because you can not subtract an integer from a tuple
+
+# e
+b = ("Bob", 19, "CS")
+(x, y, z) = b # unpacking
+print ('age = ',y) # Note to self: comma allows you to print stuff in sequence or something like that.
