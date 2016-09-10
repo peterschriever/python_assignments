@@ -77,3 +77,59 @@ random.shuffle(L) # The random.shuffle() function simply returns None
 print("m: "+str(L)) # M
 
 print("\n")
+
+# Assignment 3
+print("Assignment 3 A - D")
+
+L = [2, 3, 5, 2, 33, 21]
+# Slice the list: From the index: 1 until len(L)-3
+# if either number is negative, the index is relative to the end of the string
+# len(s) + i or len(s) + j
+# Ref: https://docs.python.org/3/library/stdtypes.html#common-sequence-operations
+# See note 3.
+print("a: "+str(L[1 : -3])) # a
+
+L = [2, 3, 5, 2, 33, 21]
+print("b: "+str(L[-4 : -2])) # b
+
+L = [2, 3, 5, 2, 33, 21]
+# Don't do this at home! Results in the same as simply calling L
+# Lol.
+print("c: "+str(L[:2] + L[2:])) # c
+
+L = [2, 3, 5, 2, 33, 21]
+print("d: "+str(L[42:])) # d
+
+print("\n")
+
+# Assignment 4
+print("Assignment 4 A - E")
+
+L1 = [30, 1, 2, 1, 0]
+L2 = [1, 21, 13]
+print("a: "+str(L1 + L2)) # a
+
+L1 = [30, 1, 2, 1, 0]
+L2 = [1, 21, 13]
+print("b: "+str(3*L2)) # b
+
+L1 = [30, 1, 2, 1, 0]
+L2 = [1, 21, 13]
+print("c: "+str(L1 > L2)) # c
+
+L1 = [30, 1, 2, 1, 0]
+L2 = [1, 21, 13]
+print("d: "+str([x for x in L1]))
+
+L1 = [30, 1, 2, 1, 0]
+L2 = [1, 21, 13]
+# TODO: unexpected EOF while parsing
+#print("e: "+str([x for x in L1 if x in L1]) # e
+
+print("\n")
+
+# Assignment 5
+print("Assignment 5")
+s = "Guido van Rossum"
+L = s.split(' ')
+print(L)
