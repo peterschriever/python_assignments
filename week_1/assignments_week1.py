@@ -217,3 +217,7 @@ x = y**0,5 # The comma is actually making a tuple here
 b = ("Bob", 19, "CS")
 (x, y, z) = b # unpacking
 print ('age = ',y) # Note to self: comma allows you to print stuff in sequence or something like that.
+
+print("\n")
+
+# Assignment 
