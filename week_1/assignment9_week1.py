@@ -2,6 +2,10 @@ def mergeSortedNumericLists(l1, l2):
     longList = l1 if len(l1) > len(l2) else l2
     shortList = l2 if len(l1) > len(l2) else l1
 
+    # better would be:
+    # mergedList = l1 + l2
+    # mergedList.sort()
+
     llPosition = 0
     for numberA in longList:
         slPosition = 0
