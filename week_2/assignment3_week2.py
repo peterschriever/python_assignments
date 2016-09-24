@@ -13,5 +13,5 @@ d2 = {'x': 300, 'y': 200}
 
 print("Assignment 3.B")
 print("Expected result: ", {'x': 300, 'y': 200, 'a': 100, 'b': 200})
-d1.update(d2);
+d1.update(d2)
 print("Actual result: ", d1)
