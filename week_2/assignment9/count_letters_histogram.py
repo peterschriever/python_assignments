@@ -27,7 +27,7 @@ def count_letters(line, counts):
     # ... for each char in line fill counts ...
     for char in line:
         charNum = (ord(char.lower()) - 97) # a = 0, z = 26
-        if charNum < 26 and charNum > -1:
+        if charNum <= 26 and charNum >= 0:
             counts[charNum] += 1
 
 
