@@ -3,7 +3,7 @@ import re
 strGenome = "ACAAGATGCCATTGTCCCCCGGCCTCCTGCTGCTGCTGCTCTCCGGGGCCACGGCCACCGCTGCCCTGCCCCTGGAGGGTGGCCCCACCGGCCGAGACAGCGAGCATATGCAGGAAGCGGCAGGAATAAGGAAAAGCAGCCTCCTGACTTTCCTCGCTTGGTGGTTTGAGTGGACCTCCCAGGCCAGTGCCGGGCCCCTCATAGGAGAGGAAGCTCGGGAGGTGGCCAGGCGGCAGGAAGGCGCACCCCCCCAGCAATCCGCGCGCCGGGACAGAATGCCCTGCAGGAACTTCTTCTGGAAGACCTTCTCCTCCTGCAAATAAAACCTCACCCATGAATGCTCACGCAAGTTTAATTACAGACCTGAA"
 
 def identifyGenesFromSeq(strGenomeSeq):
-    # Note: to make the code more dynamic the forming
+    # Note: to make the code more dynamic, the forming
     # of strRegex should be edited.
 
     strGeneStart = "ATG" # can only start with this string
@@ -15,6 +15,7 @@ def identifyGenesFromSeq(strGenomeSeq):
         +lstNotInsideGene[1]+")(?!"+lstNotInsideGene[2]+")(?!"\
         +lstNotInsideGene[3]+")[ACGT])+(("+lstGeneEnd[0]+")|("+lstGeneEnd[1]+\
         ")|("+lstGeneEnd[2]+")){1}"
+    print(strRegex)
     reGenePattern = re.compile(strRegex)
     geneMatches = reGenePattern.finditer(strGenomeSeq,
         re.IGNORECASE + re.MULTILINE)
