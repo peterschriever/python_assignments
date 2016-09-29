@@ -29,12 +29,12 @@ def getUserCardNumber() :
         return getUserCardNumber() # request the card number again
 
 def sumOfOddPositionsRightToLeft(strInput):
-    sum = 0
+    total = 0
     for x in range(1, len(strInput)+1): # 1 to 4, because we count right to left
         if x % 2 == 0: # skip even numbers
             continue
-        sum += int(strInput[-x])
-    return sum
+        total += int(strInput[-x])
+    return total
 
 def luhnStepTwoAndThree(strInput): # meh :\ function name
     sum = 0
