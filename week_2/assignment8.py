@@ -41,8 +41,6 @@ for p in range(2, hard_cap): # may be able to reduce the loop by a lot here
 for P in range(0, hard_cap):
     # Check if (2**P)-1 == a prime
     if ((2**P) - 1) in primeNumbers:
-        if ((2**P) -1) == 120:
-            print("120 found")
 
         # Perform perfectNumber formula
         perfectNumber = (2**(P-1)) * ((2**P) - 1)
