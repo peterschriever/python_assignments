@@ -10,6 +10,9 @@ FOUR = 4
 Y = "Yellow"
 R = "Red"
 
+def lstCheckEqual(lst):
+    return lst.count(lst[0]) == len(lst)
+
 class Game:
     def __init__ (self, cols = 7, rows = 6):
         """Create a new game."""
@@ -28,6 +31,7 @@ class Game:
         while c[i] != NONE:
             i -= 1
         c[i] = color
+        self.__checkForWin()
 
     def print_board (self):
         """Print the board."""
@@ -36,34 +40,44 @@ class Game:
             print(' '.join(str(self.board[x][y]) for x in range(self.cols)))
             print()
 
+    def __checkForWin(self):
+        """Check the current board for a winner."""
+        didSomeoneWin = self.__checkNInARow(FOUR)
+        if didSomeoneWin:
+            self.print_board()
+            print(FOUR, "in a row!\n", didSomeoneWin, "won!")
+            exit()
+
+    def __getRowsToCheck(self, npBoard):
+        posdiag = [
+            list(np.diagonal(npBoard, i))
+                for i in range((self.rows * -1)+1, self.cols)
+        ]
+        npBoard = np.fliplr(npBoard)
+        negdiag = [
+            list(np.diagonal(npBoard, i))
+                for i in range((self.rows * -1)+1, self.cols)
+        ]
+        rows = npBoard.tolist()
+        cols = npBoard.transpose().tolist()
+        return (rows, cols, posdiag, negdiag)
+
+    def __checkNInARow(self, nInARow):
+        npBoard = np.array(self.board)
+        rowsToCheck = self.__getRowsToCheck(npBoard)
+        for lst in chain(*rowsToCheck):
+            lst = [x for x in lst if x != NONE] # remove all NONE's from the list
+            if not lst: # list is empty (leftovers from diagonal checks)
+                continue
+            # I did not understand this part, so I did the code my own way.
+            # for i in range(len(lst)-n+1):
+            #     print("i in len(lst)-n+1: ",i, len(lst)-n+1)
+            if lst[0] != NONE and len(lst) == nInARow and lstCheckEqual(lst):
+                return Y if lst[0] == YELLOW else R
+
 class ColumnFullException(Exception):
     def __init__(self, message):
         self.message = message
-
-def lstCheckEqual(lst):
-    return lst.count(lst[0]) == len(lst)
-
-def checkNInARow(nInARow, board, boardRows, boardCols):
-    npBoard = np.array(board)
-    posdiag = [
-        list(np.diagonal(npBoard, i)) for i in range((boardRows * -1)+1, boardCols)
-    ]
-    npBoard = np.fliplr(npBoard)
-    negdiag = [
-        list(np.diagonal(npBoard, i)) for i in range((boardRows * -1)+1, boardCols)
-    ]
-    rows = npBoard.tolist()
-    cols = npBoard.transpose().tolist()
-    listsToCheck = (rows, cols, posdiag, negdiag)
-    for lst in chain(*listsToCheck):
-        lst = [x for x in lst if x != NONE] # remove all NONE's from the list
-        if not lst: # list is empty (leftovers from diagonal checks)
-            continue
-        # I did not understand this part, so I did the code my own way.
-        # for i in range(len(lst)-n+1):
-        #     print("i in len(lst)-n+1: ",i, len(lst)-n+1)
-        if lst[0] != NONE and len(lst) == nInARow and lstCheckEqual(lst):
-            return Y if lst[0] == YELLOW else R
 
 if __name__ == '__main__':
     g = Game()
@@ -78,11 +92,5 @@ if __name__ == '__main__':
         except ColumnFullException as err:
             print(err.message)
             continue # skip the part where turns are switched.
-
-        didSomeoneWin = checkNInARow(FOUR, g.board, g.rows, g.cols)
-        if didSomeoneWin:
-            g.print_board()
-            print(FOUR, "in a row!\n", didSomeoneWin, "won!")
-            break # break loop and end the game.
 
         turn = YELLOW if turn == RED else RED
