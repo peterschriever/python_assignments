@@ -10,8 +10,10 @@ FOUR = 4
 Y = "Yellow"
 R = "Red"
 
+
 def lstCheckEqual(lst):
     return lst.count(lst[0]) == len(lst)
+
 
 class Game:
     def __init__ (self, cols = 7, rows = 6):
