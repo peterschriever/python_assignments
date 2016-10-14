@@ -3,26 +3,71 @@ from random import randint
 import time
 
 class Plot:
+    """ The Plot class which draws and manages a simple tkinter plot
+
+    Class Fields:
+        s (int): The step counter, remember which step we are on.
+        x2 (int): The initial x-axis value to start drawing from.
+        y2 (int): The initial y-axis value to start drawing from.
+        guiRoot (:obj: `Tk`): The root GUI element to place tkinter widgets on
+        canvas (:obj: `Canvas`): The canvas used to plot a graph
+        _PLOT_STEP_BOUNDARY (int):  The boundary at which a new frame
+                                    has to be drawn
+
+    """
+
+    _PLOT_STEP_BOUNDARY = 23
+
     def __init__(self, s, x2, y2):
         self.s = s
         self.x2 = x2
         self.y2 = y2
 
-    def step(self):
-        if self.s == 23:
-            # new frame
+    def drawGuiWithTk(self):
+        self.guiRoot = Tk() # guiRoot element is to place tkinter widgets on
+        self.guiRoot.title('simple plot')
+        self.initializeCanvas()
+        self.addGuiButtons()
+
+    def initializeCanvas(self):
+        # 0,0 is top left corner
+        self.canvas = Canvas(self.guiRoot, width=1200, height=600, bg='white')
+        self.canvas.pack(expand=YES, fill=BOTH)
+
+        self.canvas.create_line(50,550,1150,550, width=2) # draw x-axis
+        self.canvas.create_line(50,550,50,50, width=2)    # draw y-axis
+
+        # fill axis-steps
+        for i in range(23):
+            x = 50 + (i * 50)
+            self.canvas.create_line(x,550,x,50, width=1, dash=(2,5))
+            self.canvas.create_text(x,550, text='%d'% (10*i), anchor=N)
+        for i in range(11):
+            y = 550 - (i * 50)
+            self.canvas.create_line(50,y,1150,y, width=1, dash=(2,5))
+            self.canvas.create_text(40,y, text='%d'% (10*i), anchor=E)
+
+    def addGuiButtons(self):
+        Button(self.guiRoot, text='Quit', command=self.guiRoot.quit).pack()
+
+    def plotOneStep(self):
+        if self.s == self._PLOT_STEP_BOUNDARY:
+            # draw a new frame
             self.s = 1
             self.x2 = 50
-            canvas.delete('temp') # only delete items tagged as temp
-        self.x1 = self.x2
-        self.y1 = self.y2
+            self.canvas.delete('temp') # only delete items tagged as temp
+
+        x1 = self.x2
+        y1 = self.y2
         self.x2 = 50 + self.s * 50
         self.y2 = value_to_y(randint(0,100))
-        canvas.create_line(self.x1, self.y1, self.x2, self.y2, fill='blue'\
-        , tags='temp')
-        
-        self.s += 1
-        canvas.after(300, self.step)
+        self.canvas.create_line(x1, y1, self.x2, self.y2, fill='blue', tags='temp')
+        self.s = self.s + 1
+
+    def keepPlottingEvery(self, pauseInMs):
+        self.plotOneStep()
+        self.canvas.after(pauseInMs, self.keepPlottingEvery, pauseInMs)
+
 
 def value_to_y(val):
     return 550-5*val
@@ -32,46 +77,9 @@ s = 1
 x2 = 50
 y2 = value_to_y(randint(0,100))
 
+# Create the Plot instance
 objPlot = Plot(s, x2, y2)
-
-# def step():
-#     global s, x2, y2
-#     if s == 23:
-#         # new frame
-#         s = 1
-#         x2 = 50
-#         canvas.delete('temp') # only delete items tagged as temp
-#     x1 = x2
-#     y1 = y2
-#     x2 = 50 + s*50
-#     y2 = value_to_y(randint(0,100))
-#     canvas.create_line(x1, y1, x2, y2, fill='blue', tags='temp')
-#     # print(s, x1, y1, x2, y2)
-#     s = s+1
-#     canvas.after(300, step)
-
-root = Tk()
-root.title('simple plot')
-
-canvas = Canvas(root, width=1200, height=600, bg='white') # 0,0 is top left corner
-canvas.pack(expand=YES, fill=BOTH)
-
-Button(root, text='Quit', command=root.quit).pack()
-
-canvas.create_line(50,550,1150,550, width=2) # x-axis
-canvas.create_line(50,550,50,50, width=2)    # y-axis
-
-# x-axis
-for i in range(23):
-    x = 50 + (i * 50)
-    canvas.create_line(x,550,x,50, width=1, dash=(2,5))
-    canvas.create_text(x,550, text='%d'% (10*i), anchor=N)
-
-# y-axis
-for i in range(11):
-    y = 550 - (i * 50)
-    canvas.create_line(50,y,1150,y, width=1, dash=(2,5))
-    canvas.create_text(40,y, text='%d'% (10*i), anchor=E)
-
-canvas.after(300, objPlot.step)
-root.mainloop()
+objPlot.drawGuiWithTk()
+objPlot.keepPlottingEvery(300)
+objPlot.guiRoot.mainloop() # start Tkinter event loop.
+# Tkinter event loop: http://effbot.org/tkinterbook/tkinter-hello-tkinter.htm
