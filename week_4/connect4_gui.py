@@ -85,7 +85,6 @@ class Game:
             lst = [x for x in lst if x != NONE] # remove all NONE's from the list
             if not lst: # list is empty (leftovers from diagonal checks)
                 continue
-            print(lst)
             tempWinner = None
             i = 0
             for item in lst:
@@ -178,7 +177,7 @@ class GameGui:
         else:
             tileFillColor = "gray"
 
-        self.tiles[tileCol, tileRow].create_oval(10, 5, 50, 45,
+        self.tiles[tileCol, tileRow].create_oval(10, 5, 50, 45,\
             fill=tileFillColor, width=1)
 
     def prepareTiles(self):
