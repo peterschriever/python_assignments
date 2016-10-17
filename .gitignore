@@ -1,3 +1,6 @@
+# ignore data folder with spam/ham e-mails
+week_4/data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

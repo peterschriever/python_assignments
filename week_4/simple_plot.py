@@ -10,6 +10,10 @@ def makeTkEntry(parent, label, width=None, **options):
     entry.pack()
     return entry
 
+def value_to_y(val):
+    return 550-5*val
+
+
 class Plot:
     """ The Plot class which draws and manages a simple tkinter plot
 
@@ -139,9 +143,6 @@ class Plot:
     def keepPlotting(self):
         self.plotOneStep()
         self.canvasCmdAfterId = self.canvas.after(self.pauseInMs, self.keepPlotting)
-
-def value_to_y(val):
-    return 550-5*val
 
 # init vars
 s = 1
