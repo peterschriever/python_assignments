@@ -116,9 +116,6 @@ class GameGui:
         self.drawNewGameBtn()
         self.drawBoard()
 
-    def newGame(self):
-        pass # TODO: redraw gui and call new game on self.game..
-
     def drawNewGameBtn(self):
         self.newGameBtn = Button(self.guiRoot, command=lambda: self.newGameCallback(),\
             text='new game')
